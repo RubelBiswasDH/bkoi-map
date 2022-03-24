@@ -1,23 +1,17 @@
-import logo from './logo.svg';
+
+import React from 'react';
 import './App.css';
+// import bkoigl from "bkoi-gl"
+import MapPanel from "./component/MapPanel";
+import SearchPanel from "./component/SearchPanel";
 
 function App() {
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchPanel />
+       <MapPanel />
+      
     </div>
   );
 }

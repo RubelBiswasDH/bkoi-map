@@ -1,0 +1,2 @@
+export const LOCATION_ADDED = "LOCATION_ADDED";
+export const THEME_CHANGED = "THEME_CHANGED" ;

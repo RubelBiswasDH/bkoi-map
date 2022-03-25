@@ -99,7 +99,7 @@
 }
 .bksearch{
   position: absolute;
-  width: 70%;
+  width: 95%;
   margin: 0 auto;
   font-size: 18px;
   font-weight: 500;
@@ -108,22 +108,23 @@
   border-radius: 10px;
   box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.137);
   height: 35px;
-  top: 150px;
+  top: 0;
   left: 0;
   right: 0;
-  z-index: 999;
+  z-index: 998;
 }
 
-@media only screen and (min-width: 768px) {
+/* @media only screen and (min-width: 768px) {
   .bksearch{
    position: static;
-   width: 90%;
+   width: 100%;
   }
-}
+} */
 
 @media only screen and (min-width: 768px) {
   .bksearch{
-    width: 90%;
+    position: static;
+    width: 100%;
     margin: 0 auto;
     font-size: 18px;
     font-weight: 500;
@@ -135,7 +136,7 @@
   }
 }
 .autocomplete-content{
-  z-index: 999;
+
   left: 0;
   right: 0;
   /* overflow-y: hidden; */
@@ -165,5 +166,70 @@
   max-height: 50vh;
 }
 .search-option-list{
+  cursor: pointer;
+}
+.searchbar-container{
+  display: flex;
+  position: absolute;
+  width: 70%;
+  margin: 0 auto;
+  height: 35px;
+  top: 150px;
+  left: 0;
+  right: 0;
+  z-index: 990;
+  /* padding: 10px; */
+  /* background-color: #2ddbac; */
+}
+
+
+@media only screen and (min-width: 768px) {
+  .searchbar-container{
+    position: relative;
+    top: 0;
+    width: 90%;
+    /* width: 90%;
+    margin: 0 auto;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.137);
+    height: 35px; */
+  }
+}
+
+.search-icon{
+  position: absolute;
+  background-color: red;
+  height: 25px;
+  width: 40px;
+  padding: 5px;
+  z-index: 999;
+  right: 2%;
+  /* top: 50%; */
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  background: linear-gradient(90deg,#3cb4be,#43de7f);
+  cursor: pointer;
+
+}
+.search-icon svg{
+  height: 15px;
+  width: 15px;
+}
+.close-btn{
+  position: absolute;
+  height: 25px;
+  width: 40px;
+  padding: 5px;
+  z-index: 999;
+  right: 2%;
+  /* top: 50%; */
+  margin-top: 10px;
   cursor: pointer;
 }

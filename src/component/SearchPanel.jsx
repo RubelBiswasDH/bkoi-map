@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as dispatchFunction from '../redux-states/actionCreator';
 // import bkoigl from "bkoi-gl"
@@ -24,16 +24,15 @@ const SearchPanel = () => {
     color: "black"
   }
 
-
+//  Search request
     useEffect(()=>{
       Bkoi.search(search, response => 
       { 
         setData(response);
       })
      
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     },[search])
-    // console.log("mapData")
-    // console.log(mapData)
     
 
     const selectedItemHandler = (item) => {
@@ -41,12 +40,7 @@ const SearchPanel = () => {
     }
 
     const toggleThemehandler =() =>{
-      console.log("entered +++++++++++++++")
-      // // console.log(mapData)
-      // // console.log(mapData.themeType)
       const {themeType} = mapData;
-      // console.log("+++++++++++++++++++")
-      console.log(themeType)
       if(themeType === 'dark'){
         
          dispatch(dispatchFunction.setTheme("light"))

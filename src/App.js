@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import './App.css';
 // import bkoigl from "bkoi-gl"
 import MapPanel from "./component/MapPanel";

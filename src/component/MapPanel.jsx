@@ -1,19 +1,20 @@
 // import './App.css';
 // import { bkoiConfig } from 'bkoi-gl/src/util/config';
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import bkoigl from "bkoi-gl"
 import "bkoi-gl/dist/style/bkoi-gl.css"
 import { useSelector } from "react-redux"
 
 const MapPanel = () => {
 
-    const [mapMarker, setMapMarker] = useState()
-    const [mapObject, setMapObject] = useState()
+    const [mapMarker, setMapMarker] = useState();
+    const [mapObject, setMapObject] = useState();
+
     const mapData = useSelector(prevState => prevState);
 
-    let themeColor;
-    mapData.themeType === 'dark' ? themeColor = 'https://map.barikoi.com/styles/barikoi-dark/style.json' :  themeColor = ''
+   
 
+    // creating map and navigation control 
     useEffect(()=> {
        
         bkoigl.accessToken = 'MzE0MTowQzJLM0VQRTJV' // required
@@ -22,9 +23,10 @@ const MapPanel = () => {
             center: mapData.currentLocation ? [  mapData.currentLocation.long,  mapData.currentLocation.lat ] : [ 90.3938010872331, 23.821600277500405 ],  
             zoom: 13,
             // controlPositions: 'topLeft',
-            style: themeColor
+            style: mapData.themeType === 'dark' ? 'https://map.barikoi.com/styles/barikoi-dark/style.json' :  ''
         });
-        // console.log(map);  
+
+        // Navigation Control Loader
         const controlLoader = () =>{ 
             
             map.addControl( 
@@ -48,39 +50,39 @@ const MapPanel = () => {
         console.log("Exit") 
         window.removeEventListener("load", controlLoader)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[mapData.themeType])
  
-    // console.log("mapData theme")
-    // console.log(mapData.themeType)
+   
 
-
+// Marking and jumping to map section on new location
     useEffect(()=>{
         if(mapData.currentLocation && mapObject ){
             const {currentLocation} = mapData;
-            // console.log("currentLocation")
-            // console.log(currentLocation)
             const markerColor = setMarkerColor(currentLocation.locationType);
-            console.log("markerColor")
-            console.log(markerColor)
+  
             mapMarker && mapMarker.remove();
-            // mapMarker
+     
             mapObject.flyTo({
                 center: [  mapData.currentLocation.long,  mapData.currentLocation.lat ],
                 zoom: 13 
             })
+
             const marker = new bkoigl.Marker({color: markerColor})
             .setLngLat([  mapData.currentLocation.long,  mapData.currentLocation.lat ])
             .addTo(mapObject)
             setMapMarker(prevState=> prevState = marker)
             
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[mapData.currentLocation])
 
+
+    // setting Location Marker color
     const setMarkerColor = (propertyType) => {
-        // console.log("propertyType")
-        // console.log(propertyType)
-        // const property = propertyType.substring().toLowerCase();
-        const property = propertyType.toLowerCase();
+   
+        const property = propertyType.substring().toLowerCase();
+
         if(property === "admin") return "orange";
         else if(property === "office") return "yellow";
         else if(property === "industry") return "red";

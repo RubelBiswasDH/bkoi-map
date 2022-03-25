@@ -1,10 +1,8 @@
 import * as actionType from "./actionTypes"
 
-const initialTheme = "light"
 
 const reducer = (state={} , action) => {
-    console.log("from reducer");
-    console.log(action.payload);
+
     switch (action.type) {
         case actionType.LOCATION_ADDED:
             return{

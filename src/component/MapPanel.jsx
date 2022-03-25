@@ -17,7 +17,7 @@ const MapPanel = () => {
     // creating map and navigation control 
     useEffect(()=> {
        
-        bkoigl.accessToken = 'MzE0MTowQzJLM0VQRTJV' // required
+        bkoigl.accessToken = process.env.REACT_APP_BKOI_API // required
          const map = new bkoigl.Map({
             container: 'map',  
             center: mapData.currentLocation ? [  mapData.currentLocation.long,  mapData.currentLocation.lat ] : [ 90.3938010872331, 23.821600277500405 ],  

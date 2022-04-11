@@ -14,17 +14,17 @@ const MapPanel = () => {
 
     const mapData = useSelector(prevState => prevState);
 
-   
+    const accessToken = process.env.REACT_APP_BKOI_API;
 
     useEffect(()=>{
         const fetchStyle = async () => {
             try {
-                const response = await axios.get('https://map.barikoi.com/styles/osm-bright/style.json?key=MzE0MTowQzJLM0VQRTJV');
+                const response = await axios.get('https://map.barikoi.com/styles/osm-bright/style.json?key='+`${accessToken}`);
                 
                 response.data.layers[92].minzoom = 19;
                 response.data.layers[91].minzoom = 10;
-                // response.data.layers[14].paint['fill-color'] = "#F900BF"
-
+                response.data.layers[14].paint['fill-color'] = "green"
+                //console.log(response.data.layers.slice(0,5))
                 setMapStyle(prevState => prevState = response.data);
                 console.log("response")
                 console.log(response.data.layers[91])

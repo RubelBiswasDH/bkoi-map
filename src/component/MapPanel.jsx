@@ -13,7 +13,8 @@ const MapPanel = () => {
     const [mapStyle, setMapStyle] = useState();
 
     const mapData = useSelector(prevState => prevState);
-
+    const [currentUCode,setCurrentUCode] = useState('');
+    const [currentPlace,setCurrentPlace] = useState({});
     const accessToken = process.env.REACT_APP_BKOI_API;
 
     useEffect(()=>{
@@ -47,20 +48,20 @@ const MapPanel = () => {
             try {
                 const response = await axios.get('https://map.barikoi.com/styles/osm-bright/style.json?key='+`${accessToken}`);
                 
-                response.data.layers[92].minzoom = 19;
-                response.data.layers[91].minzoom = 10;
-                response.data.layers[14].paint['fill-color'] = "gray";
+                // response.data.layers[92].minzoom = 19;
+                // response.data.layers[91].minzoom = 10;
+                // response.data.layers[14].paint['fill-color'] = "gray";
 
-                response.data.layers[2].paint['fill-color'] = "red";
-                response.data.layers[38].paint['fill-color'] = "orangered";
-                response.data.layers[45].paint['line-color'] = "black";
-                response.data.layers[45].paint['line-color'] = "black";
-                response.data.layers[96].paint['text-color'] = "red";
-                response.data.layers[39].paint['fill-extrusion-color'] = "yellow";
-                response.data.layers[39].minzoom= 18;
-                response.data.layers[12].paint['line-color'] = "blue";
-                response.data.layers[13].paint['line-color'] = "blue";
-                response.data.layers[58].paint['line-color'] = "red";
+                // response.data.layers[2].paint['fill-color'] = "red";
+                // response.data.layers[38].paint['fill-color'] = "orangered";
+                // response.data.layers[45].paint['line-color'] = "black";
+                // response.data.layers[45].paint['line-color'] = "black";
+                // response.data.layers[96].paint['text-color'] = "red";
+                // response.data.layers[39].paint['fill-extrusion-color'] = "yellow";
+                // response.data.layers[39].minzoom= 18;
+                // response.data.layers[12].paint['line-color'] = "blue";
+                // response.data.layers[13].paint['line-color'] = "blue";
+                // response.data.layers[58].paint['line-color'] = "red";
                 response.data.layers.push(bkoi_data)
 
                 //response.data.layers[96].paint['text-halo-color'] = "red";
@@ -164,18 +165,28 @@ const MapPanel = () => {
 
          
             var features = mapObject.queryRenderedFeatures(e.point);
-            console.log({ features })
-        
-      
+            //console.log({ features })
+            setCurrentUCode(features[0].properties.ucode)
+            fetch("https://api.bmapsbd.com/search/autocomplete/web?search="+features[0].properties.ucode)
+            .then(response => response.json())
+            .then(data => {
+                console.log("data: ",data)
+                if(data){
+                    setCurrentPlace(data.places[0])
+                }
+               
+            })
+            .catch( err => console.log("error: ",err))
             new bkoigl.Popup()
                 .setLngLat(e.lngLat)
                 .setHTML('you clicked here: <br/>' + features[0].properties.ucode)
                 .addTo(mapObject);
-                console.log(features[0].properties)
+                //console.log(features[0].properties)
         });
       });
 
-  
+      console.log("Clicked place's UCode: ",currentUCode);
+      console.log("Clicked place's data: ",currentPlace);
 return(
     <div >
         <div id="map">

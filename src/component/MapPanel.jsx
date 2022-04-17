@@ -167,16 +167,20 @@ const MapPanel = () => {
             var features = mapObject.queryRenderedFeatures(e.point);
             //console.log({ features })
             setCurrentUCode(features[0].properties.ucode)
-            fetch("https://api.bmapsbd.com/search/autocomplete/web?search="+features[0].properties.ucode)
-            .then(response => response.json())
-            .then(data => {
-                console.log("data: ",data)
-                if(data){
-                    setCurrentPlace(data.places[0])
-                }
-               
-            })
-            .catch( err => console.log("error: ",err))
+           // console.log("type value: ",typeof(features[0].properties.ucode),features[0].properties.ucode)
+            if(features[0].properties.ucode !== "undefined"){
+                fetch("https://api.bmapsbd.com/search/autocomplete/web?search="+features[0].properties.ucode)
+                .then(response => response.json())
+                .then(data => {
+                    //console.log("data: ",data)
+                  
+                        setCurrentPlace(data.places[0])
+                    
+                   
+                })
+                .catch( err => console.log("error: ",err))
+            }
+            
             new bkoigl.Popup()
                 .setLngLat(e.lngLat)
                 .setHTML('you clicked here: <br/>' + features[0].properties.ucode)
@@ -185,8 +189,11 @@ const MapPanel = () => {
         });
       });
 
-      console.log("Clicked place's UCode: ",currentUCode);
-      console.log("Clicked place's data: ",currentPlace);
+      useEffect(() => {
+        console.log("Clicked place's UCode: ",currentUCode);
+        console.log("Clicked place's data: ",currentPlace);
+      },[currentUCode,currentPlace]);
+
 return(
     <div >
         <div id="map">
